@@ -1,0 +1,104 @@
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    /etc/postfix/main.cf                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+smtp_always_send_ehlo = yes
+alias_database = hash:/etc/aliases
+
+alias_maps = hash:/etc/aliases
+
+compatibility_level = 2
+
+home_mailbox = Maildir/
+
+inet_interfaces = all
+
+inet_protocols = ipv4
+
+local_recipient_maps = unix:passwd.byname
+
+mail_owner = postfix
+
+mailq_path = /usr/bin/mailq
+
+message_size_limit = 10485760
+
+mydomain = domain.com
+
+myhostname = mail.domain.com
+
+mynetworks = 127.0.0.0/8
+
+mynetworks_style = subnet
+
+#myorigin =
+
+newaliases_path = /usr/bin/newaliases
+
+sendmail_path = /usr/sbin/postfix
+
+setgid_group = postdrop
+
+smtpd_banner =  ESMTP
+
+smtpd_recipient_restrictions = check_policy_service inet:127.0.0.1:35355, permit_mynetworks, permit_auth_destination, permit_sasl_authenticated, reject
+
+smtpd_sasl_auth_enable = yes
+
+smtpd_sasl_local_domain =
+
+smtpd_sasl_path = private/auth
+
+smtpd_sasl_security_options = noanonymous
+
+smtpd_sasl_type = dovecot
+
+smtpd_use_tls = yes
+
+virtual_mailbox_base = /home/domain.com
+
+virtual_mailbox_domains = domain.com
+
+#virtual_mailbox_maps = hash:/etc/postfix/virtual-mailbox
+virtual_mailbox_maps = hash:/etc/postfix/virtual-mailbox
+virtual_uid_maps = pgsql:/etc/postfix/pgsql-virtual-uid-maps.cf
+virtual_gid_maps = pgsql:/etc/postfix/pgsql-virtual-gid-maps.cf
+
+smtp_tls_mandatory_protocols = !SSLv2, !SSLv3
+# SSL sertifika dosyasının yolunu belirtir.
+
+smtpd_tls_CAfile = /ssl/mail.ca
+smtpd_tls_cert_file = /ssl/mail.combined
+smtpd_tls_key_file = /ssl/mail.key
+
+smtp_tls_CAfile = /ssl/mail.ca
+smtp_tls_cert_file = /ssl/mail.combined
+smtp_tls_key_file = /ssl/mail.key
+
+
+smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
+
+
+smtp_use_tls = yes
+smtpd_use_tls = yes
+
+
+
+#smtpd_milters = inet:127.0.0.1:48186,inet:127.0.0.1:8891,local:/var/run/milter-greylist/milter-greylist.sock
+#non_smtpd_milters = inet:127.0.0.1:48186,inet:127.0.0.1:8891,local:/var/run/milter-greylist/milter-greylist.sock
+
+smtpd_milters = inet:127.0.0.1:48186
+non_smtpd_milters = inet:127.0.0.1:48186
+
+
+virtual_alias_maps = hash:/etc/postfix/virtual_alias
+
+
+soft_bounce = yes
+
+
+minimal_backoff_time = 5s
+maximal_backoff_time = 3600s
+queue_run_delay = 300s
+bounce_queue_lifetime = 5d
+
+maximal_queue_lifetime = 5d
+unknown_address_reject_code = 450
+
